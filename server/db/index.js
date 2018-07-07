@@ -1,21 +1,16 @@
 'use strict';
 
 const db = require('./database');
-const campus = require('./campus');
-// The purpose of this module is to bring your Sequelize instance (`db`) together
-// with your models (which you should define in separate modules in this directory).
-// Example:
-//
-// const Puppy = require('./puppy')
-// const Owner = require('./owner')
+const Campus = require('./campus');
+const Student = require('./student');
+const Picture = require('./picture');
 
-// After you've required all of your models into this module, you should establish
-// associations (https://sequelize-guides.netlify.com/association-types/) between them here as well!
-// Example:
-//
-// Puppy.belongsTo(Owner)
+Student.belongsTo(Campus);
+Campus.hasMany(Student);
+Campus;
 
 module.exports = {
-  // Include your models in this exports object as well!
-  db
+  db,
+  Campus,
+  Student
 };
