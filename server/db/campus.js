@@ -1,17 +1,27 @@
 const db = require('./database');
-const sqz = require('sequelize');
+const sequelize = require('sequelize');
 
-const Campus = db.define('Campus', {
+const Campus = db.define('campus', {
   name: {
-    type: sqz.STRING,
-    allowNull: false,
-  },
-  location: {
     type: sequelize.STRING,
     allowNull: false,
+    validation: {
+      notEmpty: true,
+    },
   },
-  imgUrl: {
+  address: {
     type: sequelize.STRING,
+    allowNull: false,
+    validation: {
+      notEmpty: true,
+    },
+  },
+  imageUrl: {
+    type: sequelize.STRING,
+    defaultValue: 'https://placeimg.com/800/800/arch',
+    validate: {
+      isUrl: true,
+    },
   },
   description: {
     type: sequelize.TEXT,
