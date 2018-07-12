@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchCampuses, selectCampus, selectStudent } from '../reducers';
+import { fetchCampuses, selectCampus } from '../reducers';
 import { Link } from 'react-router-dom';
 import CampusCard from './CampusCard';
 
@@ -39,7 +39,8 @@ const NoCampus = () => (
   </h2>
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
+  ...ownProps,
   campuses: state.campuses,
 });
 
