@@ -10,7 +10,7 @@ export default createStore(
   rootReducer,
   composeEnhancers(
     applyMiddleware(
-      thunkMiddleware.withExtraArgument({ axios }),
+      thunkMiddleware.withExtraArgument(axios),
       // `withExtraArgument` gives access to axios in our async action creators!
       // https://github.com/reduxjs/redux-thunk#injecting-a-custom-argument
       loggingMiddleware

@@ -30,7 +30,7 @@ see https://materializecss.com/carousel.html
 
     <div className="row center">
       <Link
-        to="/students"
+        to="/students/"
         id="download-button"
         className="btn-large waves-effect waves-light blue-grey"
       >
@@ -39,7 +39,7 @@ see https://materializecss.com/carousel.html
       <br />
       <br />
       <Link
-        to="/campuses"
+        to="/campuses/"
         id="download-button"
         className="btn-large waves-effect waves-light blue-grey"
       >

@@ -10,25 +10,25 @@ const NavBar = props => (
 
       <ul className="right hide-on-med-and-down">
         <li>
-          <Link to="/campuses">Campuses</Link>
+          <Link to="/campuses/">Campuses</Link>
         </li>
         <li>
-          <Link to="/students">Students</Link>
+          <Link to="/students/">Students</Link>
         </li>
       </ul>
 
       <ul id="nav-mobile" className="sidenav">
         <li>
-          <Link to="/campuses">Campuses</Link>
+          <Link to="/campuses/">Campuses</Link>
         </li>
         <li>
-          <Link to="/students">Students</Link>
+          <Link to="/students/">Students</Link>
         </li>
       </ul>
       <a
         href="#"
         data-target="nav-mobile"
-        className="sidenav-trigger btn-floating btn-large"
+        className="sidenav-trigger btn-floating btn-large light-gray"
       >
         <i className="material-icons">menu</i>
       </a>

@@ -6,7 +6,7 @@ const Footer = props => (
     <div className="container">
       <div className="row">
         <div className="col l6 s12">
-          <h5 className="white-text">Company Bio</h5>
+          <h5 className="white-text">About Margaret Hamilton</h5>
           <p className="grey-text text-lighten-4">
             We are a team of javascript educators working to give our students
             the opportunity for a full time job in Javascript. We use these
