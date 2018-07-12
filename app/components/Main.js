@@ -7,6 +7,7 @@ import SingleStudent from './SingleStudent';
 import NavBar from './NavBar';
 import Landing from './Landing';
 import Footer from './Footer';
+import NotFound from './NotFound';
 
 const Main = props => (
   <div>
@@ -17,7 +18,7 @@ const Main = props => (
       <Route path="/campuses/:campus" component={SingleCampus} />
       <Route exact path="/students/" component={AllStudent} />
       <Route path="/students/:student" component={SingleStudent} />
-      <Redirect to="/" />
+      <Route component={NotFound} />
     </Switch>
     <Footer />
   </div>
