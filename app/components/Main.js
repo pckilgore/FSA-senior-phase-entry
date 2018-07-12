@@ -14,10 +14,12 @@ const Main = props => (
     <NavBar />
     <Switch>
       <Route exact path="/" component={Landing} />
-      <Route exact path="/campuses/" component={AllCampus} />
+      <Route exact strict path="/campuses/" component={AllCampus} />
       <Route path="/campuses/:campus" component={SingleCampus} />
-      <Route exact path="/students/" component={AllStudent} />
+      <Route exact strict path="/students/" component={AllStudent} />
       <Route path="/students/:student" component={SingleStudent} />
+      <Redirect exact strict path="/campuses" to="/campuses/" />
+      <Redirect exact strict path="/students" to="/students/" />
       <Route component={NotFound} />
     </Switch>
     <Footer />
