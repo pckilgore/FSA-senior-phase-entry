@@ -1,19 +1,25 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import AllCampus from './AllCampus';
 import AllStudent from './AllStudent';
 import SingleCampus from './SingleCampus';
 import SingleStudent from './SingleStudent';
+import NavBar from './NavBar';
+import Landing from './Landing';
+import Footer from './Footer';
 
-const Home = props => (
+const Main = props => (
   <div>
-    <BrowserRouter>
-      <AllCampus />
+    <NavBar />
+    <Switch>
+      <Landing />
+      {/* <AllCampus />
       <AllStudent />
-      <SingleCampus />
       <SingleStudent />
-    </BrowserRouter>
+      <SingleCampus /> */}
+    </Switch>
+    <Footer />
   </div>
 );
 
-export default Home;
+export default Main;
