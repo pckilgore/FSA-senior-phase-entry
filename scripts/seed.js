@@ -39,9 +39,10 @@ const campuses = [
   },
   {
     name: 'Remote',
-    address: `https:\\\\remote.campus.io`,
+    address: `https://remote.campus.io`,
     description:
-      `Remote learning: Because real life is totally like this.  ` + lorem,
+      `Nothing like pair programming with speed of light time delays and only one space joke in the senior enrichment seed file.  ` +
+      lorem,
   },
 ];
 
@@ -58,15 +59,16 @@ const maleUrls = () =>
 
 const gpaGen = () => +(Math.random() + 3).toFixed(2);
 
-const idGen = () => Math.round(Math.random() * (campuses.length - 1)) + 1;
+const idGen = () => Math.ceil(Math.random() * campuses.length);
 
 const nameGen = nameArr =>
-  nameArr[Math.round(Math.random() * (nameArr.length - 1)) + 1];
+  nameArr[Math.floor(Math.random() * (nameArr.length + 1))];
 
 const createStudents = (males, females, surs) =>
   new Array(500).fill({}).map(() => {
     const male = Math.random() > 0.5;
     const [first, last] = [nameGen(male ? males : females), nameGen(surs)];
+    if (!first || !last) throw Error({ message: 'Found null value for name' });
     return {
       firstName: first,
       lastName: last,
@@ -85,7 +87,7 @@ const seed = students =>
     Promise.all(students.map(student => Student.create(student))));
 
 const main = async () => {
-  let femaleNames, maleNames, lastNames;
+  let femaleNames, maleNames, lastNames, students;
 
   try {
     console.log('Requesting remote data for seedfile...');
@@ -97,7 +99,14 @@ const main = async () => {
   console.log('Got remote data!');
 
   console.log('Generating random students from remote data...');
-  const students = createStudents(femaleNames, maleNames, lastNames);
+  try {
+    students = createStudents(maleNames, femaleNames, lastNames);
+  } catch {
+    console.log(
+      `There was an error creating students.  It is likely bad seed data was pulled in from the remote server.  Try again.`
+    );
+    process.exit(1);
+  }
   console.log('Random students generated!');
 
   console.log('Syncing db...');
@@ -113,6 +122,7 @@ const main = async () => {
       console.log(err.stack);
     })
     .then(() => {
+      console.log('Done!');
       db.close();
       return null;
     });

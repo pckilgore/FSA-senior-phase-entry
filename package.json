@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "webpack -w & nodemon main.js -e html,js,css --ignore public",
     "start": "node main",
-    "seed": "node dev/seed.js"
+    "seed": "node scripts/seed.js"
   },
   "keywords": [
     "react",
@@ -26,8 +26,6 @@
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
-    "request": "^2.87.0",
-    "request-promise": "^4.2.2",
     "sequelize": "^4.37.8"
   },
   "devDependencies": {
@@ -39,10 +37,12 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.11",
-    "style-loader": "^0.21.0",
     "eslint": "^4.19.1",
     "eslint-config-fullstack": "^5.0.0",
     "eslint-plugin-react": "^7.8.2",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2",
+    "style-loader": "^0.21.0",
     "volleyball": "^1.4.1",
     "webpack": "^4.8.3",
     "webpack-cli": "^2.1.3"
