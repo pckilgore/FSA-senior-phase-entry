@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchCampuses } from '../reducers';
+import { fetchCampuses, selectCampus, selectStudent } from '../reducers';
 import { Link } from 'react-router-dom';
+import CampusCard from './CampusCard';
 
 class AllCampus extends React.Component {
   componentDidMount() {
@@ -12,32 +13,41 @@ class AllCampus extends React.Component {
     const campuses = this.props.campuses;
     return (
       <div className="container">
-        <ul>
-          {campuses.length === 0 ? (
-            <h2 className="row center header col s12 light blue-grey-text text-darken-2">
-              No Campuses Exist
-            </h2>
-          ) : (
-            campuses.map(campus => (
-              <li key={campus.id}>
-                <Link to={`${this.props.match.url + campus.id}`}>
-                  {campus.name}
-                </Link>
-              </li>
-            ))
-          )}
-        </ul>
+        {campuses.length === 0 ? (
+          <NoCampus />
+        ) : (
+          <div className="row">
+            {campuses.map(campus => (
+              <Link
+                key={campus.id}
+                to={'/campuses/' + campus.id}
+                onClick={() => this.props.selectCampus(campus)}
+              >
+                <CampusCard {...campus} />
+              </Link>
+            ))}{' '}
+          </div>
+        )}
       </div>
     );
   }
 }
+
+const NoCampus = () => (
+  <h2 className="row center header col s12 light blue-grey-text text-darken-2">
+    No Campuses Exist
+  </h2>
+);
 
 const mapStateToProps = state => ({
   campuses: state.campuses,
 });
 
 const mapDispatchToProps = dispatch => {
-  return { fetchCampuses: () => dispatch(fetchCampuses()) };
+  return {
+    fetchCampuses: () => dispatch(fetchCampuses()),
+    selectCampus: campus => dispatch(selectCampus(campus)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllCampus);
