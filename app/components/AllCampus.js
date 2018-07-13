@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchCampuses, selectCampus, clearCampus } from '../reducers';
+import { fetchCampuses, selectCampus } from '../reducers';
 import CampusList from './CampusList';
 import NothingHere from './NothingHere';
 import CampusActions from './CampusActions';
@@ -14,7 +14,7 @@ class AllCampus extends React.Component {
     const campuses = this.props.campuses;
     return (
       <div className="container">
-        <CampusActions addCampus="true" onClick={() => clearCampus()} />
+        <CampusActions addCampus="true" />
         {campuses.length === 0 ? (
           <NothingHere message="No Campuses Registered" />
         ) : (

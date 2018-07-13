@@ -56,5 +56,4 @@ router
       .header({ Allow: 'GET, PUT, DELETE' })
       .status(405)
       .send());
-
 module.exports = router;

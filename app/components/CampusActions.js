@@ -22,6 +22,7 @@ const CampusActions = props => {
             Campus
           </Link>
         </div>
+
         <span>{'  '} </span>
         <div className="section col 6">
           <div
