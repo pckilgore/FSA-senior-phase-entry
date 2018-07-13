@@ -21,19 +21,20 @@ class SingleStudent extends React.Component {
         <h3 className="row center header col s12 light blue-grey-text text-darken-2">
           {selectedStudent.firstName + ' ' + selectedStudent.lastName}
         </h3>
-        <div className="divider" />
         <StudentDetail {...selectedStudent} />
-        <div className="section">
-          <h5>Attends:</h5>
+        <div className="section teal-text center-align">
+          <h5>Campus</h5>
         </div>
         {selectedStudent.campusId ? (
-          <CampusList
-            className="right"
-            campuses={this.props.campuses.filter(
-              campus => campus.id === selectedStudent.campusId
-            )}
-            selectCampus={this.props.selectCampus}
-          />
+          <div className="col offset-m4 offset-l5">
+            <CampusList
+              className="right"
+              campuses={this.props.campuses.filter(
+                campus => campus.id === selectedStudent.campusId
+              )}
+              selectCampus={this.props.selectCampus}
+            />
+          </div>
         ) : (
           <NothingHere message="Student is not enrolled at any campus." />
         )}
