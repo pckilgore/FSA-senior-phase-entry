@@ -1,7 +1,5 @@
 import React from 'react';
 
-const validInput = prop => (prop ? 'hidden' : 'visible');
-
 const CampusForm = props => (
   <form onSubmit={props.submitFn}>
     <div className="input-field">

@@ -50,9 +50,26 @@ export const campusAdded = selectedCampus => ({
   selectedCampus,
 });
 
+export const campusEdited = selectedCampus => ({
+  type: EDIT_CAMPUS,
+  selectedCampus,
+});
+
 // Thunks
+
+export const editCampus = selectedCampus => async (
+  dispatch,
+  getStore,
+  axios
+) => {
+  const { data } = await axios.put(
+    `/api/campus/${selectedCampus.id}`,
+    selectedCampus
+  );
+  dispatch(campusEdited(data));
+};
+
 export const addCampus = campus => async (dispatch, getStore, axios) => {
-  console.log('FROM THUNK', campus);
   const { data } = await axios.post('/api/campus/', campus);
   dispatch(campusAdded(data));
 };
@@ -114,6 +131,18 @@ const rootReducer = (state = initialState, action) => {
         campuses: [...state.campuses, action.selectedCampus],
         selectedCampus: action.selectedCampus,
         nextCampus: state.nextCampus + 1,
+      };
+    case EDIT_CAMPUS:
+      return {
+        ...state,
+        campuses: state.campuses.reduce((campuses, campus) => {
+          if (campus.id === action.selectedCampus.id) {
+            return [...campuses, action.selectedCampus];
+          } else {
+            return [...campuses, campus];
+          }
+        }, []),
+        selectedCampus: action.selectedCampus,
       };
     default:
       return state;

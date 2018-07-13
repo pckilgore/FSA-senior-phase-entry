@@ -8,8 +8,8 @@ const campusFromJSON = campusJSON => {
     name: campusJSON.name,
     address: campusJSON.address,
   };
-  if (campusJSON.imageUrl) return { ...result, imageUrl: campusJSON.imageUrl };
-  if (campusJSON.description) return { ...result, description: campusJSON.description };
+  if (campusJSON.imageUrl) result = { ...result, imageUrl: campusJSON.imageUrl };
+  if (campusJSON.description) result = { ...result, description: campusJSON.description };
   return result;
 };
 

@@ -12,17 +12,25 @@ const CampusActions = props => {
     );
   } else {
     return (
-      <div className="center-align">
-        <Link to="/campuses/edit" className="blue waves-effect waves-light btn">
-          <i className=" material-icons left">edit</i>Update {props.name} Campus
-        </Link>
+      <div className="right-align">
+        <div className="float-right">
+          <Link
+            to="/campuses/edit"
+            className="section blue waves-effect waves-light btn"
+          >
+            <i className=" material-icons left">edit</i>Update {props.name}{' '}
+            Campus
+          </Link>
+        </div>
         <span>{'  '} </span>
-        <div
-          onClick={() => props.deleteCampus(props.id)}
-          className="red waves-effect waves-light btn"
-        >
-          <i className="material-icons left">delete</i>Delete {props.name}{' '}
-          Campus (THERE IS NO CONFIRM!!!)
+        <div className="section col 6">
+          <div
+            onClick={() => props.deleteCampus(props.id)}
+            className="section red waves-effect waves-light btn"
+          >
+            <i className="material-icons left">delete</i>Delete {props.name}{' '}
+            Campus (THERE IS NO CONFIRM!!!)
+          </div>
         </div>
       </div>
     );

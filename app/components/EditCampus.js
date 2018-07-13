@@ -17,6 +17,7 @@ class EditCampus extends React.Component {
   }
 
   handleSubmit = event => {
+    console.log('Trigger warning');
     event.preventDefault();
     this.props.editCampus({ ...this.state });
     this.props.history.push(`/campuses/${this.props.selectedCampus.id}`);
@@ -27,7 +28,10 @@ class EditCampus extends React.Component {
   };
 
   render() {
+    // Leave if no campus is currently selected.
     if (this.props.selectedCampus.id === 0) this.props.history.push('/campuses/');
+
+    // Render form if there is a selected campus.
     return (
       <div className="container">
         <h3>Edit {this.props.selectedCampus.name} Campus </h3>
