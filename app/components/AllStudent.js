@@ -3,6 +3,7 @@ import { fetchCampuses, fetchStudents, selectStudent } from '../reducers';
 import { connect } from 'react-redux';
 import StudentList from './StudentList';
 import NothingHere from './NothingHere';
+import StudentActions from './StudentActions';
 
 class AllStudent extends React.Component {
   componentDidMount() {
@@ -12,6 +13,7 @@ class AllStudent extends React.Component {
   render() {
     return (
       <div className="container">
+        <StudentActions addStudent="true" />
         {this.props.students.length === 0 ? (
           <NothingHere message="No students enrolled at any campus." />
         ) : (

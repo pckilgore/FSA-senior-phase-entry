@@ -3,14 +3,18 @@
 const router = require('express').Router();
 const Student = require('../db/student');
 
-const studentFromJSON = studentJSON => ({
-  firstName: studentJSON.firstName,
-  lastName: studentJSON.lastName,
-  email: studentJSON.email,
-  imageUrl: studentJSON.imageUrl,
-  gpa: +studentJSON.gpa,
-  campusId: studentJSON.campusId ? +studentJSON.campusId : null,
-});
+const studentFromJSON = studentJSON => {
+  let result = {
+    firstName: studentJSON.firstName,
+    lastName: studentJSON.lastName,
+    email: studentJSON.email,
+    campusId: studentJSON.campusId ? +studentJSON.campusId : null,
+  };
+  if (studentJSON.imageUrl) result = { ...result, imageUrl: studentJSON.imageUrl };
+  if (studentJSON.gpa) result = { ...result, gpa: +studentJSON.gpa };
+
+  return result;
+};
 
 router
   .route('/')

@@ -10,6 +10,7 @@ import Footer from './Footer';
 import NotFound from './NotFound';
 import AddCampus from './AddCampus';
 import EditCampus from './EditCampus';
+import AddStudent from './AddStudent';
 
 const Main = props => (
   <div>
@@ -24,6 +25,8 @@ const Main = props => (
       <Route path="/campuses/:campus" component={SingleCampus} />
       {/* Students Routes */}
       <Route exact strict path="/students/" component={AllStudent} />
+      <Route exact strict path="/students/add" component={AddStudent} />
+      <Route exact strict path="/campuses/edit" component={EditCampus} />
       <Route path="/students/:student" component={SingleStudent} />
       {/* Redirects and Catchalls */}
       <Redirect exact strict path="/campuses" to="/campuses/" />

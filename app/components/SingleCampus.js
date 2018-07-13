@@ -21,7 +21,7 @@ class SingleCampus extends React.Component {
 
   handleDelete = id => {
     this.props.deleteCampus(id);
-    setTimeout(() => this.props.history.push(`/campuses/`), 1000);
+    setTimeout(() => this.props.history.push(`/campuses/`), 500);
   };
 
   render() {

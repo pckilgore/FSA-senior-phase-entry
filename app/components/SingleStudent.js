@@ -1,28 +1,46 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchCampuses, fetchStudents, selectCampus } from '../reducers';
+import {
+  fetchCampuses,
+  fetchStudents,
+  selectCampus,
+  deleteStudent,
+} from '../reducers';
 
 import CampusList from './CampusList';
 import StudentDetail from './StudentDetail';
 import NothingHere from './NothingHere';
+import StudentActions from './StudentActions';
 
 class SingleStudent extends React.Component {
   componentDidMount() {
     this.props.fetchCampuses();
     this.props.fetchStudents();
   }
+
+  handleDelete = id => {
+    this.props.deleteStudent(id);
+    setTimeout(() => this.props.history.push(`/students/`), 500);
+  };
+
   render() {
     // Wait until student lookup is complete if this was a direct link.
     const selectedStudent = this.props.selectedStudent;
     if (!selectedStudent) return <NothingHere message="Loading..." />;
 
     return (
-      <div className="container row">
+      <div className="container">
         <h3 className="row center header col s12 light blue-grey-text text-darken-2">
           {selectedStudent.firstName + ' ' + selectedStudent.lastName}
         </h3>
         <StudentDetail {...selectedStudent} />
-        <div className="section teal-text center-align">
+        <StudentActions
+          {...selectedStudent}
+          editStudent={this.props.editStudent}
+          deleteStudent={this.handleDelete}
+        />
+        <div className="divider" />
+        <div className="section teal-text">
           <h5>Campus</h5>
         </div>
         {selectedStudent.campusId ? (
@@ -63,6 +81,7 @@ const mapDispatchToProps = dispatch => {
     fetchCampuses: () => dispatch(fetchCampuses()),
     fetchStudents: () => dispatch(fetchStudents()),
     selectCampus: campus => dispatch(selectCampus(campus)),
+    deleteStudent: studentId => dispatch(deleteStudent(studentId)),
   };
 };
 

@@ -19,11 +19,6 @@ const StudentDetail = props => (
             </ul>
           </p>
         </div>
-        <div className="card-action ">
-          <a className="cyan-text" href="#">
-            Update Student Record
-          </a>
-        </div>
       </div>
     </div>
   </div>

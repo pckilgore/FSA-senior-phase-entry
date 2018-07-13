@@ -8,12 +8,17 @@ const initialState = {
   selectedCampus: { name: 'Loading campus...', id: 0 },
   selectedStudent: { firstName: 'Loading', lastName: 'student...', id: 0 },
   nextCampus: 0,
+  nextStudent: 0,
 };
 
 // Actions
 const GOT_CAMPUSES_FROM_SERVER = 'GOT_CAMPUSES_FROM_SERVER';
 const GOT_STUDENTS_FROM_SERVER = 'GOT_STUDENTS_FROM_SERVER';
+
 const SELECTED_STUDENT = 'SELECTED_STUDENT';
+const ADD_STUDENT = 'ADD_STUDENT';
+const DELETE_STUDENT = 'DELETE_STUDENT';
+
 const SELECTED_CAMPUS = 'SELECTED_CAMPUS';
 const EDIT_CAMPUS = 'EDIT_CAMPUS';
 const ADD_CAMPUS = 'ADD_CAMPUS';
@@ -40,6 +45,16 @@ export const selectCampus = campus => ({
   campus,
 });
 
+export const studentAdded = newStudent => ({
+  type: ADD_STUDENT,
+  newStudent,
+});
+
+export const studentDeleted = studentId => ({
+  type: DELETE_STUDENT,
+  studentId,
+});
+
 export const campusDeleted = campusId => ({
   type: DELETE_CAMPUS,
   campusId,
@@ -56,16 +71,20 @@ export const campusEdited = selectedCampus => ({
 });
 
 // Thunks
+export const deleteStudent = studentId => async (dispatch, getStore, axios) => {
+  const deleted = await axios.delete(`/api/student/${studentId}`);
+  if (deleted.data.success) {
+    dispatch(campusDeleted(studentId));
+  }
+};
 
-export const editCampus = selectedCampus => async (
-  dispatch,
-  getStore,
-  axios
-) => {
-  const { data } = await axios.put(
-    `/api/campus/${selectedCampus.id}`,
-    selectedCampus
-  );
+export const addStudent = student => async (dispatch, getStore, axios) => {
+  const { data } = await axios.post('/api/student/', student);
+  dispatch(studentAdded(data));
+};
+
+export const editCampus = campus => async (dispatch, getStore, axios) => {
+  const { data } = await axios.put(`/api/campus/${campus.id}`, campus);
   dispatch(campusEdited(data));
 };
 
@@ -106,6 +125,25 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         students: action.students,
+        nextStudent: action.students.reduce(
+          (next, student) => (student.id > next ? student.id : next),
+          0
+        ),
+      };
+    case ADD_STUDENT:
+      return {
+        ...state,
+        students: [...state.students, action.newStudent],
+        selectedStudent: action.newStudent,
+        nextStudent: state.nextStudent + 1,
+      };
+    case DELETE_STUDENT:
+      return {
+        ...state,
+        students: state.students.filter(
+          student => student.id !== action.studentId
+        ),
+        selectedStudent: initialState.selectedCampus,
       };
     case SELECTED_CAMPUS:
       return {
