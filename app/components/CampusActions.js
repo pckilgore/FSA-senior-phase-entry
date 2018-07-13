@@ -13,7 +13,7 @@ const CampusActions = props => {
   } else {
     return (
       <div className="center-align">
-        <Link to="/" className="blue waves-effect waves-light btn">
+        <Link to="/campuses/edit" className="blue waves-effect waves-light btn">
           <i className=" material-icons left">edit</i>Update {props.name} Campus
         </Link>
         <span>{'  '} </span>

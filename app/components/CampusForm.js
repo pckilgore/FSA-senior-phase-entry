@@ -11,7 +11,9 @@ const CampusForm = props => (
         value={props.campus.name}
         onChange={props.changeFn}
       />
-      <label htmlFor="name">Campus Name</label>
+      <label className={props.active} htmlFor="name">
+        Campus Name
+      </label>
       <span className="helper-text">Cannot be empty</span>
     </div>
     <div className="input-field">
@@ -21,7 +23,9 @@ const CampusForm = props => (
         value={props.campus.address}
         onChange={props.changeFn}
       />
-      <label htmlFor="address">Campus Address</label>
+      <label className={props.active} htmlFor="address">
+        Campus Address
+      </label>
       <span className="helper-text">Cannot be empty</span>
     </div>
     <div className="input-field">
@@ -32,7 +36,9 @@ const CampusForm = props => (
         value={props.campus.imageUrl}
         onChange={props.changeFn}
       />
-      <label htmlFor="imageUrl">Campus Image Url</label>
+      <label className={props.active} htmlFor="imageUrl">
+        Campus Image Url
+      </label>
       <span
         className="helper-text"
         data-error="Invalid URL"
@@ -43,14 +49,16 @@ const CampusForm = props => (
     </div>
     <div className="input-field">
       <textarea
+        id="resizeTextArea"
         name="description"
-        className="materialize-textarea validate"
+        className="materialize-textarea"
         value={props.campus.description}
         onChange={props.changeFn}
       />
-      <label htmlFor="description">Campus Description</label>
+      <label className={props.active} htmlFor="description">
+        Campus Description
+      </label>
     </div>
-
     <button
       className="btn waves-effect waves-light"
       disabled={!props.campus.name || !props.campus.address}
@@ -59,6 +67,12 @@ const CampusForm = props => (
       Submit
       <i className="material-icons right">send</i>
     </button>
+    {[
+      () =>
+        setTimeout(() => {
+          M.textareaAutoResize($('#resizeTextArea'));
+        }, 100),
+    ].forEach(func => func())}
   </form>
 );
 
