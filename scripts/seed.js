@@ -18,25 +18,25 @@ const lorem =
 const campuses = [
   {
     name: 'Chicago',
-    address: '123 Superior Ave.\nChicago, Illinois 60601',
+    address: '123 Superior Ave. Chicago, Illinois 60601',
     description: `Chicago is great.  ` + lorem,
     imageUrl: 'https://placeimg.com/800/800/arch/1',
   },
   {
     name: 'New York',
-    address: '456 Avenue of the Americas\nNew York, New York 20031',
+    address: '456 Avenue of the Americas New York, New York 20031',
     description: `New York is OK to visit.  ` + lorem,
     imageUrl: 'https://placeimg.com/800/800/arch/2',
   },
   {
     name: 'Austin',
-    address: '789 Main Street\nAustin, Texas 73301',
+    address: '789 Main Street Austin, Texas 73301',
     description: `Never been to Austin.  ` + lorem,
     imageUrl: 'https://placeimg.com/800/800/arch/3',
   },
   {
     name: 'San Fransisco',
-    address: '101112 Valley Road\nMountain View, California 94039',
+    address: '101112 Valley Road Mountain View, California 94039',
     description:
       `San Fransisco used to be sweet before it got expensive.  ` + lorem,
     imageUrl: 'https://placeimg.com/800/800/arch/4',

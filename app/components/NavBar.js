@@ -5,7 +5,7 @@ const NavBar = props => (
   <nav className="light-blue lighten-1" role="navigation">
     <div className="nav-wrapper container">
       <Link id="logo-container" className="brand-logo" to="/">
-        Home
+        <i className="material-icons">local_library</i> MHA
       </Link>
 
       <ul className="right hide-on-med-and-down">

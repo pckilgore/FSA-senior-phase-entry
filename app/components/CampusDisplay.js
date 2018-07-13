@@ -1,8 +1,8 @@
 import React from 'react';
 
 const CampusDisplay = props => (
-  <div>
-    <div className="card">
+  <div className="row valign-wrapper">
+    <div className="card col l8 offset-l2 valign">
       <div className="card-image">
         <img src={props.imageUrl} />
       </div>
