@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchCampuses, selectCampus } from '../reducers';
+import { fetchCampuses, selectCampus, clearCampus } from '../reducers';
 import CampusList from './CampusList';
 import NothingHere from './NothingHere';
+import CampusActions from './CampusActions';
 
 class AllCampus extends React.Component {
   componentDidMount() {
@@ -11,9 +12,9 @@ class AllCampus extends React.Component {
 
   render() {
     const campuses = this.props.campuses;
-    console.log('HERE:', campuses);
     return (
       <div className="container">
+        <CampusActions addCampus="true" onClick={() => clearCampus()} />
         {campuses.length === 0 ? (
           <NothingHere message="No Campuses Registered" />
         ) : (
@@ -32,11 +33,9 @@ const mapStateToProps = (state, ownProps) => ({
   campuses: state.campuses,
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchCampuses: () => dispatch(fetchCampuses()),
-    selectCampus: campus => dispatch(selectCampus(campus)),
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  fetchCampuses: () => dispatch(fetchCampuses()),
+  selectCampus: campus => dispatch(selectCampus(campus)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllCampus);

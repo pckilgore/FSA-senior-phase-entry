@@ -28,7 +28,7 @@ const NavBar = props => (
       <a
         href="#"
         data-target="nav-mobile"
-        className="sidenav-trigger btn-floating btn-large blue-grey"
+        className="sidenav-trigger btn-floating btn-large teal"
       >
         <i className="material-icons">menu</i>
       </a>

@@ -2,18 +2,16 @@ import React from 'react';
 
 const CampusDisplay = props => (
   <div>
-    <div className="row center header col s1">
-      <img
-        src={props.imageUrl}
-        alt="Campus Image"
-        height="800px"
-        width="800px"
-      />{' '}
+    <div className="card">
+      <div className="card-image">
+        <img src={props.imageUrl} />
+      </div>
+      <div className="card-content">
+        <div className="divider" />
+        <blockquote className="section flow-text"> {props.address}</blockquote>
+        <p className="flow-text"> {props.description}</p>
+      </div>
     </div>
-    <p> {props.address}</p>
-    <br />
-    <p> {props.description}</p>
-    <br />
   </div>
 );
 

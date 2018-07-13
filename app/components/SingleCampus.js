@@ -1,8 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { fetchCampuses, fetchStudents, selectStudent } from '../reducers';
+import {
+  fetchCampuses,
+  fetchStudents,
+  selectStudent,
+  deleteCampus,
+  editCampus,
+} from '../reducers';
 
+import CampusActions from './CampusActions';
 import CampusDisplay from './CampusDisplay';
 import NothingHere from './NothingHere';
 import StudentList from './StudentList';
@@ -12,6 +18,12 @@ class SingleCampus extends React.Component {
     this.props.fetchCampuses();
     this.props.fetchStudents();
   }
+
+  handleDelete = id => {
+    this.props.deleteCampus(id);
+    setTimeout(() => this.props.history.push(`/campuses/`), 1000);
+  };
+
   render() {
     // Wait until campus lookup is complete if this was a direct link.
     const selectedCampus = this.props.selectedCampus;
@@ -28,13 +40,11 @@ class SingleCampus extends React.Component {
           {selectedCampus.name} Campus
         </h3>
         <CampusDisplay {...selectedCampus} />
-        <div className="center-align">
-          <Link to="/">
-            <a className="pink waves-effect waves-light btn">
-              <i className=" material-icons left">cloud</i>Update Campus
-            </a>
-          </Link>
-        </div>
+        <CampusActions
+          {...selectedCampus}
+          editCampus={this.props.editCampus}
+          deleteCampus={this.handleDelete}
+        />
         <p />
         <h4 className="row center header col s12 light blue-grey-text">
           Enrolled Students
@@ -72,6 +82,8 @@ const mapDispatchToProps = dispatch => {
     fetchCampuses: () => dispatch(fetchCampuses()),
     fetchStudents: () => dispatch(fetchStudents()),
     selectStudent: student => dispatch(selectStudent(student)),
+    deleteCampus: campusId => dispatch(deleteCampus(campusId)),
+    editCampus: campusId => dispatch(editCampus(campusId)),
   };
 };
 

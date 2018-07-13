@@ -3,12 +3,15 @@
 const router = require('express').Router();
 const Campus = require('../db/campus');
 
-const campusFromJSON = campusJSON => ({
-  name: campusJSON.name,
-  address: campusJSON.address,
-  imageUrl: campusJSON.imageUrl,
-  description: campusJSON.description,
-});
+const campusFromJSON = campusJSON => {
+  let result = {
+    name: campusJSON.name,
+    address: campusJSON.address,
+  };
+  if (campusJSON.imageUrl) return { ...result, imageUrl: campusJSON.imageUrl };
+  if (campusJSON.description) return { ...result, description: campusJSON.description };
+  return result;
+};
 
 router
   .route('/')
@@ -44,7 +47,9 @@ router
       .catch(next))
   .delete((req, res, next) =>
     Campus.destroy({ where: { id: +req.params.campusId } })
-      .then(done => (done ? res.status(204).end() : res.status(404).end()))
+      .then(
+        done => (done ? res.send({ success: true }) : res.status(404).end())
+      )
       .catch(next))
   .all((req, res, next) =>
     res

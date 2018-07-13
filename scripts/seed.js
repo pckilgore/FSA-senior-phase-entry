@@ -20,22 +20,26 @@ const campuses = [
     name: 'Chicago',
     address: '123 Superior Ave.\nChicago, Illinois 60601',
     description: `Chicago is great.  ` + lorem,
+    imageUrl: 'https://placeimg.com/800/800/arch/1',
   },
   {
     name: 'New York',
     address: '456 Avenue of the Americas\nNew York, New York 20031',
     description: `New York is OK to visit.  ` + lorem,
+    imageUrl: 'https://placeimg.com/800/800/arch/2',
   },
   {
     name: 'Austin',
     address: '789 Main Street\nAustin, Texas 73301',
     description: `Never been to Austin.  ` + lorem,
+    imageUrl: 'https://placeimg.com/800/800/arch/3',
   },
   {
     name: 'San Fransisco',
     address: '101112 Valley Road\nMountain View, California 94039',
     description:
       `San Fransisco used to be sweet before it got expensive.  ` + lorem,
+    imageUrl: 'https://placeimg.com/800/800/arch/4',
   },
   {
     name: 'Remote',
@@ -43,6 +47,7 @@ const campuses = [
     description:
       `Nothing like pair programming with speed of light time delays and only one space joke in the senior enrichment seed file.  ` +
       lorem,
+    imageUrl: 'https://placeimg.com/800/800/arch/5',
   },
 ];
 
@@ -65,7 +70,7 @@ const nameGen = nameArr =>
   nameArr[Math.floor(Math.random() * (nameArr.length + 1))];
 
 const createStudents = (males, females, surs) =>
-  new Array(500).fill({}).map(() => {
+  new Array(150).fill({}).map(() => {
     const male = Math.random() > 0.5;
     const [first, last] = [nameGen(male ? males : females), nameGen(surs)];
     if (!first || !last) throw Error({ message: 'Found null value for name' });
