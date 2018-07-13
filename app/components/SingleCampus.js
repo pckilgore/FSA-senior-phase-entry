@@ -1,7 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchCampuses, fetchStudents } from '../reducers';
 import { Link } from 'react-router-dom';
+import { fetchCampuses, fetchStudents, selectStudent } from '../reducers';
+
+import CampusDisplay from './CampusDisplay';
+import NothingHere from './NothingHere';
+import StudentList from './StudentList';
 
 class SingleCampus extends React.Component {
   componentDidMount() {
@@ -9,56 +13,57 @@ class SingleCampus extends React.Component {
     this.props.fetchStudents();
   }
   render() {
+    // Wait until campus lookup is complete if this was a direct link.
     const selectedCampus = this.props.selectedCampus;
+    if (!selectedCampus) return <NothingHere message="Loading..." />;
+
+    // Filter students.
+    const studentsOnCampus = this.props.students.filter(
+      student => student.campusId === selectedCampus.id
+    );
+
     return (
       <div className="container">
         <h3 className="row center header col s12 light blue-grey-text text-darken-2">
           {selectedCampus.name} Campus
         </h3>
-        <div className="row center header col s1">
-          <img
-            src={selectedCampus.imageUrl}
-            alt="Campus Image"
-            height="800px"
-            width="800px"
-          />{' '}
+        <CampusDisplay {...selectedCampus} />
+        <div className="center-align">
+          <Link to="/">
+            <a className="pink waves-effect waves-light btn">
+              <i className=" material-icons left">cloud</i>Update Campus
+            </a>
+          </Link>
         </div>
-        <p> {selectedCampus.address}</p>
-        <br />
-        <p> {selectedCampus.description}</p>
-        <br />
-        <hr />
+        <p />
         <h4 className="row center header col s12 light blue-grey-text">
-          Current Students
+          Enrolled Students
         </h4>
-        <ul>
-          {this.props.campusStudents.length === 0 ? (
-            <li>No Students are currently enrolled at this campus</li>
-          ) : (
-            this.props.campusStudents.map(student => (
-              <li key={student.id}>
-                <Link to={`/student/` + student.id}>
-                  <img src={student.imageUrl} />
-                  <p>{student.firstName + ' ' + student.lastName}</p>
-                </Link>
-              </li>
-            ))
-          )}
-        </ul>
+        {studentsOnCampus.length === 0 ? (
+          <NothingHere message="No students enrolled." />
+        ) : (
+          <StudentList
+            students={studentsOnCampus}
+            selectStudent={this.props.selectStudent}
+          />
+        )}
       </div>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const currentCampusId = +ownProps.match.params.campus;
+  // Handle direct links. Default state has id=0 so we can test for that.
+  const urlCampusId = +ownProps.match.params.campus;
+  const selectCampusFromUrlorState =
+    state.selectedCampus.id === 0
+      ? state.campuses.find(campus => campus.id === urlCampusId)
+      : state.selectedCampus;
+
   return {
     ...ownProps,
-    campuses: state.campuses,
-    campusStudents: state.students.filter(
-      student => student.campusId === currentCampusId
-    ),
-    selectedCampus: state.campuses[currentCampusId - 1],
+    students: state.students,
+    selectedCampus: selectCampusFromUrlorState,
   };
 };
 
@@ -66,6 +71,7 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchCampuses: () => dispatch(fetchCampuses()),
     fetchStudents: () => dispatch(fetchStudents()),
+    selectStudent: student => dispatch(selectStudent(student)),
   };
 };
 

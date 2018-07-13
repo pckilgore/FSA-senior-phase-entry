@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchCampuses, selectCampus } from '../reducers';
-import { Link } from 'react-router-dom';
-import CampusCard from './CampusCard';
+import CampusList from './CampusList';
+import NothingHere from './NothingHere';
 
 class AllCampus extends React.Component {
   componentDidMount() {
@@ -11,33 +11,21 @@ class AllCampus extends React.Component {
 
   render() {
     const campuses = this.props.campuses;
+    console.log('HERE:', campuses);
     return (
       <div className="container">
         {campuses.length === 0 ? (
-          <NoCampus />
+          <NothingHere message="No Campuses Registered" />
         ) : (
-          <div className="row">
-            {campuses.map(campus => (
-              <Link
-                key={campus.id}
-                to={'/campuses/' + campus.id}
-                onClick={() => this.props.selectCampus(campus)}
-              >
-                <CampusCard {...campus} />
-              </Link>
-            ))}{' '}
-          </div>
+          <CampusList
+            campuses={campuses}
+            selectCampus={this.props.selectCampus}
+          />
         )}
       </div>
     );
   }
 }
-
-const NoCampus = () => (
-  <h2 className="row center header col s12 light blue-grey-text text-darken-2">
-    No Campuses Exist
-  </h2>
-);
 
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps,

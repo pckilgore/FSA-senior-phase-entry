@@ -1,8 +1,8 @@
 import React from 'react';
-import { fetchCampuses, fetchStudents } from '../reducers';
+import { fetchCampuses, fetchStudents, selectStudent } from '../reducers';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import StudentCard from './StudentCard';
+import StudentList from './StudentList';
+import NothingHere from './NothingHere';
 
 class AllStudent extends React.Component {
   componentDidMount() {
@@ -13,26 +13,17 @@ class AllStudent extends React.Component {
     return (
       <div className="container">
         {this.props.students.length === 0 ? (
-          <NoStudent />
+          <NothingHere message="No students enrolled at any campus." />
         ) : (
-          <div className="row">
-            {this.props.students.map(student => (
-              <Link key={student.id} to={`/students/` + student.id}>
-                <StudentCard {...student} />
-              </Link>
-            ))}{' '}
-          </div>
+          <StudentList
+            students={this.props.students}
+            selectStudent={this.props.selectStudent}
+          />
         )}
       </div>
     );
   }
 }
-
-const NoStudent = () => (
-  <h2 className="row center header col s12 light blue-grey-text text-darken-2">
-    No Students are currently enrolled at any campus
-  </h2>
-);
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -45,6 +36,7 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchCampuses: () => dispatch(fetchCampuses()),
     fetchStudents: () => dispatch(fetchStudents()),
+    selectStudent: student => dispatch(selectStudent(student)),
   };
 };
 
