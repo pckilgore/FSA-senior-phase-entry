@@ -1,10 +1,6 @@
-// `combineReducers` is not currently used, but eventually should be for modular code :D
-// When you're ready to use it, un-comment the line below!
-// import {combineReducers} from 'redux'
-
 const initialState = {
   campuses: [{ name: 'Loading...', id: 0 }],
-  students: [{ firstName: 'Loading', lastName: 'Students...', id: 0 }],
+  students: [{ firstName: 'Loading', lastName: 'students...', id: 0 }],
   selectedCampus: { name: 'Loading campus...', id: 0 },
   selectedStudent: { firstName: 'Loading', lastName: 'student...', id: 0 },
   nextCampus: 0,
@@ -77,51 +73,63 @@ export const campusEdited = selectedCampus => ({
 });
 
 // Thunks
-export const editStudent = student => async (dispatch, getStore, axios) => {
-  const { data } = await axios.put(`/api/student/${student.id}`, student);
-  dispatch(studentEdited(data));
+export const editStudent = student => (dispatch, getStore, axios) => {
+  axios
+    .put(`/api/student/${student.id}`, student)
+    .then(res => dispatch(studentEdited(res.data)))
+    .catch(err => console.error(err));
 };
 
-export const deleteStudent = studentId => async (dispatch, getStore, axios) => {
-  const deleted = await axios.delete(`/api/student/${studentId}`);
-  if (deleted.data.success) {
-    dispatch(studentDeleted(studentId));
-  }
+export const deleteStudent = studentId => (dispatch, getStore, axios) => {
+  axios
+    .delete(`/api/student/${studentId}`)
+    .then(res => res.data.success && dispatch(studentDeleted(studentId)))
+    .catch(err => console.error(err));
 };
 
-export const addStudent = student => async (dispatch, getStore, axios) => {
-  const { data } = await axios.post('/api/student/', student);
-  dispatch(studentAdded(data));
+export const addStudent = student => (dispatch, getStore, axios) => {
+  axios
+    .post('/api/student/', student)
+    .then(res => dispatch(studentAdded(res.data)))
+    .catch(err => console.error(err));
 };
 
-export const editCampus = campus => async (dispatch, getStore, axios) => {
-  const { data } = await axios.put(`/api/campus/${campus.id}`, campus);
-  dispatch(campusEdited(data));
+export const editCampus = campus => (dispatch, getStore, axios) => {
+  axios
+    .put(`/api/campus/${campus.id}`, campus)
+    .then(res => dispatch(campusEdited(res.data)))
+    .catch(err => console.error(err));
 };
 
-export const addCampus = campus => async (dispatch, getStore, axios) => {
-  const { data } = await axios.post('/api/campus/', campus);
-  dispatch(campusAdded(data));
+export const addCampus = campus => (dispatch, getStore, axios) => {
+  axios
+    .post('/api/campus/', campus)
+    .then(res => dispatch(campusAdded(res.data)))
+    .catch(err => console.error(err));
 };
 
-export const deleteCampus = campusId => async (dispatch, getStore, axios) => {
-  const deleted = await axios.delete(`/api/campus/${campusId}`);
-  if (deleted.data.success) {
-    dispatch(campusDeleted(campusId));
-  }
+export const deleteCampus = campusId => (dispatch, getStore, axios) => {
+  axios
+    .delete(`/api/campus/${campusId}`)
+    .then(res => res.data.success && dispatch(campusDeleted(campusId)))
+    .catch(err => console.error(err));
 };
 
-export const fetchCampuses = () => async (dispatch, getStore, axios) => {
-  const { data } = await axios.get('/api/campus/');
-  dispatch(gotCampuses(data));
+export const fetchCampuses = () => (dispatch, getStore, axios) => {
+  axios
+    .get('/api/campus/')
+    .then(res => dispatch(gotCampuses(res.data)))
+    .catch(err => console.error(err));
 };
 
-export const fetchStudents = () => async (dispatch, getStore, axios) => {
-  const { data } = await axios.get('/api/student/');
-  dispatch(gotStudents(data));
+export const fetchStudents = () => (dispatch, getStore, axios) => {
+  axios
+    .get('/api/student/')
+    .then(res => dispatch(gotStudents(res.data)))
+    .catch(err => console.error(err));
 };
 
-const rootReducer = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GOT_CAMPUSES_FROM_SERVER:
       return {
@@ -210,4 +218,4 @@ const rootReducer = (state = initialState, action) => {
   }
 };
 
-export default rootReducer;
+export default reducer;

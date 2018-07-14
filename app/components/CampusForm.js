@@ -73,3 +73,5 @@ const CampusForm = props => (
     ].forEach(func => func())}
   </form>
 );
+
+export default CampusForm;
