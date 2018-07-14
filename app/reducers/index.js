@@ -18,6 +18,7 @@ const GOT_STUDENTS_FROM_SERVER = 'GOT_STUDENTS_FROM_SERVER';
 const SELECTED_STUDENT = 'SELECTED_STUDENT';
 const ADD_STUDENT = 'ADD_STUDENT';
 const DELETE_STUDENT = 'DELETE_STUDENT';
+const EDIT_STUDENT = 'EDIT_STUDENT';
 
 const SELECTED_CAMPUS = 'SELECTED_CAMPUS';
 const EDIT_CAMPUS = 'EDIT_CAMPUS';
@@ -74,7 +75,7 @@ export const campusEdited = selectedCampus => ({
 export const deleteStudent = studentId => async (dispatch, getStore, axios) => {
   const deleted = await axios.delete(`/api/student/${studentId}`);
   if (deleted.data.success) {
-    dispatch(campusDeleted(studentId));
+    dispatch(studentDeleted(studentId));
   }
 };
 
@@ -143,7 +144,7 @@ const rootReducer = (state = initialState, action) => {
         students: state.students.filter(
           student => student.id !== action.studentId
         ),
-        selectedStudent: initialState.selectedCampus,
+        selectedStudent: initialState.selectedStudent,
       };
     case SELECTED_CAMPUS:
       return {

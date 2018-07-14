@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchCampuses, fetchStudents, selectStudent } from '../reducers';
+import { fetchStudents, selectStudent } from '../reducers';
 import { connect } from 'react-redux';
 import StudentList from './StudentList';
 import NothingHere from './NothingHere';
@@ -7,7 +7,6 @@ import StudentActions from './StudentActions';
 
 class AllStudent extends React.Component {
   componentDidMount() {
-    this.props.fetchCampuses();
     this.props.fetchStudents();
   }
   render() {
@@ -36,7 +35,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchCampuses: () => dispatch(fetchCampuses()),
     fetchStudents: () => dispatch(fetchStudents()),
     selectStudent: student => dispatch(selectStudent(student)),
   };

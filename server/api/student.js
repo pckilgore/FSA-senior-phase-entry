@@ -8,7 +8,7 @@ const studentFromJSON = studentJSON => {
     firstName: studentJSON.firstName,
     lastName: studentJSON.lastName,
     email: studentJSON.email,
-    campusId: studentJSON.campusId ? +studentJSON.campusId : null,
+    campusId: +studentJSON.campusId ? +studentJSON.campusId : null,
   };
   if (studentJSON.imageUrl) result = { ...result, imageUrl: studentJSON.imageUrl };
   if (studentJSON.gpa) result = { ...result, gpa: +studentJSON.gpa };
@@ -50,7 +50,9 @@ router
       .catch(next))
   .delete((req, res, next) =>
     Student.destroy({ where: { id: +req.params.studentId } })
-      .then(done => (done ? res.status(204).end() : res.status(404).end()))
+      .then(
+        done => (done ? res.send({ success: true }) : res.status(404).end())
+      )
       .catch(next))
   .all((req, res, next) =>
     res

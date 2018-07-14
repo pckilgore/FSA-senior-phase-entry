@@ -1,7 +1,7 @@
 import React from 'react';
 import StudentForm from './StudentForm';
 import { connect } from 'react-redux';
-import { addStudent } from '../reducers';
+import { addStudent, fetchCampuses } from '../reducers';
 
 class AddStudent extends React.Component {
   // Keeps local state with new data until it is committed.
@@ -11,7 +11,12 @@ class AddStudent extends React.Component {
     email: '',
     imageUrl: '',
     gpa: NaN,
+    campusId: 0,
   };
+
+  componentDidMount() {
+    this.props.fetchCampuses();
+  }
 
   handleSubmit = event => {
     console.log('HIT THE THING');
@@ -37,6 +42,7 @@ class AddStudent extends React.Component {
               student={this.state}
               submitFn={this.handleSubmit}
               changeFn={this.handleChange}
+              campuses={this.props.campuses}
             />
           </div>
         </div>
@@ -46,11 +52,13 @@ class AddStudent extends React.Component {
 }
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps,
+  campuses: state.campuses,
   nextStudent: state.nextStudent,
 });
 
 const mapDispatchToProps = dispatch => ({
   addStudent: student => dispatch(addStudent(student)),
+  fetchCampuses: () => dispatch(fetchCampuses()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddStudent);
