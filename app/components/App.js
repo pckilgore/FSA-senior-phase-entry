@@ -1,16 +1,20 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import AllCampus from './AllCampus';
-import AllStudent from './AllStudent';
-import SingleCampus from './SingleCampus';
-import SingleStudent from './SingleStudent';
-import NavBar from './NavBar';
+
 import Landing from './Landing';
+import NavBar from './NavBar';
 import Footer from './Footer';
 import NotFound from './NotFound';
+
+import AllCampus from './AllCampus';
+import SingleCampus from './SingleCampus';
 import AddCampus from './AddCampus';
 import EditCampus from './EditCampus';
+
+import AllStudent from './AllStudent';
+import SingleStudent from './SingleStudent';
 import AddStudent from './AddStudent';
+import EditStudent from './EditStudent';
 
 const Main = props => (
   <div>
@@ -26,7 +30,7 @@ const Main = props => (
       {/* Students Routes */}
       <Route exact strict path="/students/" component={AllStudent} />
       <Route exact strict path="/students/add" component={AddStudent} />
-      <Route exact strict path="/campuses/edit" component={EditCampus} />
+      <Route exact strict path="/students/edit" component={EditStudent} />
       <Route path="/students/:student" component={SingleStudent} />
       {/* Redirects and Catchalls */}
       <Redirect exact strict path="/campuses" to="/campuses/" />

@@ -19,7 +19,6 @@ class AddStudent extends React.Component {
   }
 
   handleSubmit = event => {
-    console.log('HIT THE THING');
     event.preventDefault();
     this.props.addStudent({ ...this.state });
     setTimeout(
