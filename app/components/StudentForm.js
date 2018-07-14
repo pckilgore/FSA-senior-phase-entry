@@ -42,7 +42,9 @@ const StudentForm = props => (
         value={props.student.email}
         onChange={props.changeFn}
       />
-      <label htmlFor="email">Email</label>
+      <label className={props.active} htmlFor="email">
+        Email
+      </label>
       <span
         className="helper-text"
         data-error="Invalid Email"
@@ -91,7 +93,11 @@ const StudentForm = props => (
       />
     </div>
     <div className="input-field">
-      <select name="campusId" onChange={props.changeFn}>
+      <select
+        name="campusId"
+        onChange={props.changeFn}
+        value={props.student.campusId}
+      >
         <option>None</option>
         {props.campuses.map(campus => (
           <option key={campus.id} value={campus.id}>

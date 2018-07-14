@@ -1,26 +1,29 @@
 import React from 'react';
-import CampusForm from './CampusForm';
+import StudentForm from './StudentForm';
 import { connect } from 'react-redux';
-import { editCampus } from '../reducers';
+import { editStudent, fetchCampuses } from '../reducers';
 
-class EditCampus extends React.Component {
+class EditStudent extends React.Component {
   // Keeps local state with new data until it is committed.
   state = {
-    name: '',
-    address: '',
+    firstName: '',
+    lastName: '',
+    email: '',
     imageUrl: '',
-    description: '',
+    gpa: NaN,
+    campusId: 0,
   };
 
   componentDidMount() {
-    this.setState(() => ({ ...this.props.selectedCampus }));
+    this.props.fetchCampuses();
+    this.setState(() => ({ ...this.props.selectedStudent }));
   }
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.editCampus({ ...this.state });
+    this.props.editStudent({ ...this.state });
     setTimeout(() => {
-      this.props.history.push(`/campuses/${this.props.selectedCampus.id}`);
+      this.props.history.push(`/students/${this.props.selectedStudent.id}`);
     }, 200);
   };
 
@@ -30,16 +33,17 @@ class EditCampus extends React.Component {
 
   render() {
     // Leave if no campus is currently selected.
-    if (this.props.selectedCampus.id === 0) this.props.history.push('/campuses/');
+    if (this.props.selectedStudent.id === 0) this.props.history.push('/students/');
 
     // Render form if there is a selected campus.
     return (
       <div className="container">
-        <h3>Edit {this.props.selectedCampus.name} Campus </h3>
+        <h3>Edit {this.props.selectedStudent.name} Campus </h3>
         <div className="card">
           <div className="card-content">
-            <CampusForm
-              campus={this.state}
+            <StudentForm
+              student={this.state}
+              campuses={this.props.campuses}
               submitFn={this.handleSubmit}
               changeFn={this.handleChange}
               active="active"
@@ -52,12 +56,14 @@ class EditCampus extends React.Component {
 }
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps,
-  selectedCampus: state.selectedCampus,
+  campuses: state.campuses,
+  selectedStudent: state.selectedStudent,
   nextCampus: state.nextCampus,
 });
 
 const mapDispatchToProps = dispatch => ({
-  editCampus: campus => dispatch(editCampus(campus)),
+  editStudent: student => dispatch(editStudent(student)),
+  fetchCampuses: () => dispatch(fetchCampuses()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditCampus);
+export default connect(mapStateToProps, mapDispatchToProps)(EditStudent);

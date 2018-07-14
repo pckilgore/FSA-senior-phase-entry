@@ -56,6 +56,11 @@ export const studentDeleted = studentId => ({
   studentId,
 });
 
+export const studentEdited = student => ({
+  type: EDIT_STUDENT,
+  student,
+});
+
 export const campusDeleted = campusId => ({
   type: DELETE_CAMPUS,
   campusId,
@@ -72,6 +77,11 @@ export const campusEdited = selectedCampus => ({
 });
 
 // Thunks
+export const editStudent = student => async (dispatch, getStore, axios) => {
+  const { data } = await axios.put(`/api/student/${student.id}`, student);
+  dispatch(studentEdited(data));
+};
+
 export const deleteStudent = studentId => async (dispatch, getStore, axios) => {
   const deleted = await axios.delete(`/api/student/${studentId}`);
   if (deleted.data.success) {
@@ -145,6 +155,18 @@ const rootReducer = (state = initialState, action) => {
           student => student.id !== action.studentId
         ),
         selectedStudent: initialState.selectedStudent,
+      };
+    case EDIT_STUDENT:
+      return {
+        ...state,
+        students: state.students.reduce((students, student) => {
+          if (student.id === action.student.id) {
+            return [...students, action.student];
+          } else {
+            return [...students, student];
+          }
+        }, []),
+        selectedStudent: action.student,
       };
     case SELECTED_CAMPUS:
       return {
